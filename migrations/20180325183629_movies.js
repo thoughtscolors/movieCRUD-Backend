@@ -5,7 +5,8 @@ exports.up = function(knex, Promise) {
     table.string('title').notNullable().defaultsTo('')
     table.string('director').notNullable().defaultsTo('')
     table.integer('year').notNullable().defaultsTo(3011)
-    table.integer('rating')
+    table.string('rating').defaultsTo(parseInt(Math.random() * 1000) / 10)
+    table.string('url')
     table.timestamps(true, true)
   })
 };
