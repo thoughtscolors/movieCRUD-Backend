@@ -7,7 +7,7 @@ exports.seed = function(knex, Promise) {
       // Inserts seed entries
       return knex('movies').insert([
         {id: uuid(), title: 'Mulholland Drive', director: 'David Lynch', year: '2001', rating: '11'},
-        {id: uuid(), title: 'Holy Mountain', director: 'Alejandro Jordowosky', year: '1973', rating: '27'}
+        {id: uuid(), title: 'The Holy Mountain', director: 'Alejandro Jodorwosky', year: '1973', rating: '27'}
       ])
     })
     .then(() => {
