@@ -6,37 +6,38 @@ const getAll = () => {
 }
 
 const getMovie = (id) => {
+
   return knex('movies')
-    .select('')
     .where({ id })
 }
 
-const addMovie = (id, title, director, year, rating) => {
+const addMovie = (id, title, director, year, rating, url) => {
+
   return knex
-    .insert( { id, title, director, year, rating } )
+    .insert( { id, title, director, year, rating, url } )
     .into('movies')
     .returning('*')
 }
 
-const editMovie = (id) => {
-  return knex
-    .insert( { title, director, year, rating } )
-    .into('movies')
+const saveMovieDetails = (id, title, director, year, rating, url) => {
+
+  return knex('movies')
     .where({ id })
+    .update( { title, director, year, rating, url } )
     .returning('*')
 }
 
 const deleteMovie = (id) => {
   return knex('movies')
-    .delete()
-    .returning('*')
     .where({ id })
+    .del()
+    .returning('*')
 }
 
 module.exports = {
   getAll,
   getMovie,
   addMovie,
-  editMovie,
+  saveMovieDetails,
   deleteMovie
 }

@@ -11,7 +11,6 @@ const getAll = () => {
 const getMovie = (id) => {
   const movie = moviesDb.getMovie(id)
   return movie.then(result => {
-    console.log('result in model', result, 'result|||result[0]', result[0])
     return result[0]
   })
 }
@@ -23,34 +22,39 @@ const addMovie = (body) => {
   const director = body.director
   const year = body.year
   const rating = body.rating
+  const url = body.url
 
-  if (!id || !title || !director || !year || !rating) {
-    errors.push('Missing id, title, director, year, or rating')
-    return {errors}
+
+
+  if (!id || !title || !director || !year || !rating || !url) {
+    errors.push('Missing id, title, director, year, rating, or url')
+    return errors
   } else {
-    const newMovie = moviesDb.addMovie(id, title, director, year, rating)
+    const newMovie = moviesDb.addMovie(id, title, director, year, rating, url)
     return newMovie.then(result => {
-      console.log("addMovie result in models", result, result[0]);
+
       return result[0]
     })
   }
 }
 
-const editMovie = (body) => {
+const saveMovieDetails = (id, body) => {
   const errors = []
-
   const title = body.title
   const director = body.director
   const year = body.year
   const rating = body.rating
+  const url = body.url
 
-  if (!title || !director || !year || !rating) {
-    errors.push('Missing title, director, year, or rating')
-    return {errors}
+
+
+  if (!id || !title || !director || !year || !rating || !url) {
+    errors.push('Missing id, title, director, year, rating, or url')
+    return errors
   } else {
-    const edited = moviesDb.editMovie(title, director, year, rating)
+    const edited = moviesDb.saveMovieDetails(id, title, director, year, rating, url)
     return edited.then(result => {
-      console.log("editMovie result in models", result, result[0]);
+      
       return result[0]
     })
   }
@@ -60,9 +64,11 @@ const deleteMovie = (id) => {
   const errors = []
 
   if (!id) {
-    errors.push('Movie id is required')
+    errors.push({error: 'Movie id is required'})
+    const result = { errors }
+    return result
   }
-  const deleteMovie= moviesDb.deleteMovie(id)
+  const deleteMovie = moviesDb.deleteMovie(id)
   return deleteMovie.then(result => {
     return result
   })
@@ -73,6 +79,6 @@ module.exports = {
   getAll,
   getMovie,
   addMovie,
-  editMovie,
+  saveMovieDetails,
   deleteMovie
 }
